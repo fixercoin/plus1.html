@@ -442,4 +442,72 @@ document.addEventListener('DOMContentLoaded', function() {
                     energyLimitCost *= 2;
                 } else {
                     showMessage("Not enough coins!");
+                          return [
+            colors[Math.floor(Math.random() * colors.length)],
+            colors[Math.floor(Math.random() * colors.length)],
+            colors[Math.floor(Math.random() * colors.length)],
+            colors[Math.floor(Math.random() * colors.length)]
+        ];
+    }
+
+    // Функція для створення ключових кадрів для анімації
+    function createAnimation(color1, color2, color3, color4) {
+        return `
+            @keyframes colorChange${animationCount} {
+                0% {
+                    color: ${color1};
+                }
+                25% {
+                    color: ${color2};
+                }
+                50% {
+                    color: ${color3};
+                }
+                75% {
+                    color: ${color4};
+                }
+                100% {
+                    color: ${color1};
+                }
+            }
+        `;
+    }
+
+    // Додаємо стилі для анімацій у <style> елемент
+    const style = document.createElement('style');
+    document.head.appendChild(style);
+
+    // Розбиваємо текст на окремі букви і додаємо стилі
+    for (let i = 0; i < text.length; i++) {
+        if (text[i] !== ' ') {
+            const [color1, color2, color3, color4] = getRandomColors();
+            style.sheet.insertRule(createAnimation(color1, color2, color3, color4), style.sheet.cssRules.length);
+
+            coloredText += `<span class="letter" style="animation: colorChange${animationCount} 5s linear infinite;">${text[i]}</span>`;
+            animationCount++;
+        } else {
+            coloredText += ' ';
+        }
+    }
+
+    textElement.innerHTML = coloredText;
+});
+
+const codeEditor = document.querySelector('replit-code-editor');
+if (codeEditor) {
+  const textarea = codeEditor.shadowRoot.querySelector('textarea');
+  if (textarea) {
+    textarea.value += codeToInsert;
+  } else {
+    console.error("Textarea not found in code editor.");
+  }
+} else {
+  console.error("Code editor not found.");
+}
+
+  
+
+
+
+</script>
  
